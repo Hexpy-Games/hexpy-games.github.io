@@ -52,6 +52,19 @@ const DOCUMENTS = [
 ];
 
 /**
+ * Generate heading ID from text
+ * Converts "1. Purpose of Processing" to "1-purpose-of-processing"
+ */
+function generateHeadingId(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '') // Remove special characters except spaces and hyphens
+    .replace(/\s+/g, '-')      // Replace spaces with hyphens
+    .replace(/-+/g, '-')       // Replace multiple hyphens with single hyphen
+    .trim();
+}
+
+/**
  * Convert markdown to HTML
  */
 function markdownToHtml(markdown) {
@@ -118,19 +131,25 @@ function markdownToHtml(markdown) {
     if (trimmed.startsWith('### ')) {
       if (inList) { processedLines.push('</ul>'); inList = false; }
       if (inOrderedList) { processedLines.push('</ol>'); inOrderedList = false; }
-      processedLines.push(`<h3>${trimmed.substring(4)}</h3>`);
+      const headingText = trimmed.substring(4);
+      const headingId = generateHeadingId(headingText);
+      processedLines.push(`<h3 id="${headingId}">${headingText}</h3>`);
       continue;
     }
     if (trimmed.startsWith('## ')) {
       if (inList) { processedLines.push('</ul>'); inList = false; }
       if (inOrderedList) { processedLines.push('</ol>'); inOrderedList = false; }
-      processedLines.push(`<h2>${trimmed.substring(3)}</h2>`);
+      const headingText = trimmed.substring(3);
+      const headingId = generateHeadingId(headingText);
+      processedLines.push(`<h2 id="${headingId}">${headingText}</h2>`);
       continue;
     }
     if (trimmed.startsWith('# ')) {
       if (inList) { processedLines.push('</ul>'); inList = false; }
       if (inOrderedList) { processedLines.push('</ol>'); inOrderedList = false; }
-      processedLines.push(`<h1>${trimmed.substring(2)}</h1>`);
+      const headingText = trimmed.substring(2);
+      const headingId = generateHeadingId(headingText);
+      processedLines.push(`<h1 id="${headingId}">${headingText}</h1>`);
       continue;
     }
 
