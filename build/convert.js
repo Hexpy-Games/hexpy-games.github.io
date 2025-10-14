@@ -213,8 +213,15 @@ function markdownToHtml(markdown) {
   // Convert bold
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 
-  // Convert links
-  html = html.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  // Convert links - handle anchor links differently
+  html = html.replace(/\[(.+?)\]\((.+?)\)/g, (match, text, url) => {
+    // Anchor links (starting with #) should not open in new tab
+    if (url.startsWith('#')) {
+      return `<a href="${url}">${text}</a>`;
+    }
+    // External links open in new tab
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+  });
 
   // Clean up empty paragraphs
   html = html.replace(/<p>\s*<\/p>/g, '');
