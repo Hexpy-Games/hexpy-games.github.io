@@ -47,82 +47,169 @@ const DOCUMENTS = [
  * Convert markdown to HTML
  */
 function markdownToHtml(markdown) {
-  let html = markdown;
-
-  // Convert headers
-  html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
-  html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
-  html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
-
-  // Convert bold
-  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-
-  // Convert links
-  html = html.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-
-  // Convert lists
-  const lines = html.split('\n');
+  // First pass: process block-level elements line by line
+  const lines = markdown.split('\n');
+  let processedLines = [];
   let inList = false;
   let inOrderedList = false;
-  let processedLines = [];
+  let inTable = false;
+  let tableRows = [];
+  let tableHeaders = [];
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const trimmed = line.trim();
+    const nextLine = i + 1 < lines.length ? lines[i + 1].trim() : '';
+
+    // Detect table start (line with | characters)
+    if (trimmed.startsWith('|') && trimmed.endsWith('|') && !inTable) {
+      // Check if next line is separator (e.g., | --- | --- |)
+      if (nextLine.match(/^\|[\s\-:|]+\|$/)) {
+        // This is a table header
+        inTable = true;
+        tableHeaders = trimmed.split('|').map(cell => cell.trim()).filter(cell => cell);
+        i++; // Skip the separator line
+        tableRows = [];
+        continue;
+      }
+    }
+
+    // Collect table rows
+    if (inTable && trimmed.startsWith('|') && trimmed.endsWith('|')) {
+      const cells = trimmed.split('|').map(cell => cell.trim()).filter(cell => cell);
+      tableRows.push(cells);
+      continue;
+    }
+
+    // End of table
+    if (inTable && (!trimmed.startsWith('|') || !trimmed.endsWith('|'))) {
+      // Generate table HTML
+      let tableHtml = '<table>\n<thead>\n<tr>\n';
+      tableHeaders.forEach(header => {
+        tableHtml += `<th>${header}</th>\n`;
+      });
+      tableHtml += '</tr>\n</thead>\n<tbody>\n';
+      tableRows.forEach(row => {
+        tableHtml += '<tr>\n';
+        row.forEach(cell => {
+          tableHtml += `<td>${cell}</td>\n`;
+        });
+        tableHtml += '</tr>\n';
+      });
+      tableHtml += '</tbody>\n</table>';
+      processedLines.push(tableHtml);
+      inTable = false;
+      tableHeaders = [];
+      tableRows = [];
+    }
+
+    // Skip if we're in a table
+    if (inTable) continue;
+
+    // Headers
+    if (trimmed.startsWith('### ')) {
+      if (inList) { processedLines.push('</ul>'); inList = false; }
+      if (inOrderedList) { processedLines.push('</ol>'); inOrderedList = false; }
+      processedLines.push(`<h3>${trimmed.substring(4)}</h3>`);
+      continue;
+    }
+    if (trimmed.startsWith('## ')) {
+      if (inList) { processedLines.push('</ul>'); inList = false; }
+      if (inOrderedList) { processedLines.push('</ol>'); inOrderedList = false; }
+      processedLines.push(`<h2>${trimmed.substring(3)}</h2>`);
+      continue;
+    }
+    if (trimmed.startsWith('# ')) {
+      if (inList) { processedLines.push('</ul>'); inList = false; }
+      if (inOrderedList) { processedLines.push('</ol>'); inOrderedList = false; }
+      processedLines.push(`<h1>${trimmed.substring(2)}</h1>`);
+      continue;
+    }
+
+    // Horizontal rules
+    if (trimmed === '---') {
+      if (inList) { processedLines.push('</ul>'); inList = false; }
+      if (inOrderedList) { processedLines.push('</ol>'); inOrderedList = false; }
+      processedLines.push('<hr>');
+      continue;
+    }
 
     // Unordered list
     if (trimmed.match(/^[-*]\s+/)) {
+      if (inOrderedList) { processedLines.push('</ol>'); inOrderedList = false; }
       if (!inList) {
         processedLines.push('<ul>');
         inList = true;
       }
       const content = trimmed.replace(/^[-*]\s+/, '');
       processedLines.push(`<li>${content}</li>`);
+      continue;
     }
+
     // Ordered list
-    else if (trimmed.match(/^\d+\.\s+/)) {
+    if (trimmed.match(/^\d+\.\s+/)) {
+      if (inList) { processedLines.push('</ul>'); inList = false; }
       if (!inOrderedList) {
         processedLines.push('<ol>');
         inOrderedList = true;
       }
       const content = trimmed.replace(/^\d+\.\s+/, '');
       processedLines.push(`<li>${content}</li>`);
+      continue;
     }
-    // End of list
-    else {
-      if (inList) {
-        processedLines.push('</ul>');
-        inList = false;
-      }
-      if (inOrderedList) {
-        processedLines.push('</ol>');
-        inOrderedList = false;
-      }
 
-      // Paragraphs
-      if (trimmed && !trimmed.startsWith('<')) {
-        processedLines.push(`<p>${line}</p>`);
-      } else if (trimmed) {
-        processedLines.push(line);
-      } else {
-        processedLines.push('');
-      }
+    // End of list
+    if (inList && !trimmed.match(/^[-*]\s+/)) {
+      processedLines.push('</ul>');
+      inList = false;
     }
+    if (inOrderedList && !trimmed.match(/^\d+\.\s+/)) {
+      processedLines.push('</ol>');
+      inOrderedList = false;
+    }
+
+    // Empty lines
+    if (!trimmed) {
+      processedLines.push('');
+      continue;
+    }
+
+    // Regular paragraphs
+    processedLines.push(`<p>${line}</p>`);
   }
 
-  // Close any open lists
+  // Close any open lists or tables
   if (inList) processedLines.push('</ul>');
   if (inOrderedList) processedLines.push('</ol>');
+  if (inTable) {
+    // Generate remaining table
+    let tableHtml = '<table>\n<thead>\n<tr>\n';
+    tableHeaders.forEach(header => {
+      tableHtml += `<th>${header}</th>\n`;
+    });
+    tableHtml += '</tr>\n</thead>\n<tbody>\n';
+    tableRows.forEach(row => {
+      tableHtml += '<tr>\n';
+      row.forEach(cell => {
+        tableHtml += `<td>${cell}</td>\n`;
+      });
+      tableHtml += '</tr>\n';
+    });
+    tableHtml += '</tbody>\n</table>';
+    processedLines.push(tableHtml);
+  }
 
-  html = processedLines.join('\n');
+  let html = processedLines.join('\n');
 
-  // Convert horizontal rules
-  html = html.replace(/^---$/gm, '<hr>');
+  // Second pass: inline elements
+  // Convert bold
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+  // Convert links
+  html = html.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 
   // Clean up empty paragraphs
   html = html.replace(/<p>\s*<\/p>/g, '');
-  html = html.replace(/<p>\s*<h/g, '<h');
-  html = html.replace(/<\/h[1-6]>\s*<\/p>/g, (match) => match.replace(/<\/?p>/g, ''));
 
   return html;
 }
