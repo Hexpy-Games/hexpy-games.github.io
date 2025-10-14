@@ -1,6 +1,6 @@
 # NanaChan AI - Legal Documents
 
-This repository hosts the legal documents for NanaChan AI, including Privacy Policy and Terms of Use, served via GitHub Pages.
+Automated legal document system for NanaChan AI with markdown source files and automated HTML generation via GitHub Actions.
 
 ## 🌐 Live Site
 
@@ -9,63 +9,115 @@ This repository hosts the legal documents for NanaChan AI, including Privacy Pol
 ## 📄 Available Documents
 
 ### Privacy Policy
-- **English:** `/privacy-policy.html` → https://pages.hexpy.games/privacy-policy
-- **Korean:** `/privacy-policy-ko.html` → https://pages.hexpy.games/privacy-policy-ko
+- **English:** https://pages.hexpy.games/nanachanai/terms/privacy-policy-en
+- **Korean:** https://pages.hexpy.games/nanachanai/terms/privacy-policy-ko
 
 ### Terms of Use
-- **English:** `/terms-of-use.html` → https://pages.hexpy.games/terms-of-use
-- **Korean:** `/terms-of-use-ko.html` → https://pages.hexpy.games/terms-of-use-ko
+- **English:** https://pages.hexpy.games/nanachanai/terms/terms-of-use-en
+- **Korean:** https://pages.hexpy.games/nanachanai/terms/terms-of-use-ko
 
 ## 🏗️ Repository Structure
 
+### Main Branch (Source)
 ```
-nanachan-ai-terms/
-├── privacy-policy.html           # Privacy Policy (English)
-├── privacy-policy-ko.html        # Privacy Policy (Korean)
-├── terms-of-use.html            # Terms of Use (English)
-├── terms-of-use-ko.html         # Terms of Use (Korean)
+/
+├── .github/workflows/
+│   └── build-and-deploy.yml    # Automated build and deploy
+├── nanachanai/
+│   └── terms/
+│       ├── privacy-policy-en.md
+│       ├── privacy-policy-ko.md
+│       ├── terms-of-use-en.md
+│       └── terms-of-use-ko.md
+├── build/
+│   ├── convert.js              # Markdown-to-HTML converter
+│   └── assets/
+│       └── css/
+│           └── style.css       # Minimal styling
+├── CNAME                       # pages.hexpy.games
+├── .nojekyll                   # Disable Jekyll
+└── README.md
+```
+
+### GH-Pages Branch (Published - Auto-generated)
+```
+/
+├── nanachanai/
+│   └── terms/
+│       ├── privacy-policy-en.html
+│       ├── privacy-policy-ko.html
+│       ├── terms-of-use-en.html
+│       └── terms-of-use-ko.html
 ├── assets/
 │   └── css/
-│       └── style.css            # Minimal stylesheet
-├── convert.js                    # Markdown to HTML converter
-├── .nojekyll                    # Disable Jekyll processing
-└── README.md                     # This file
+│       └── style.css
+├── CNAME
+└── .nojekyll
 ```
 
-## 🚀 Deployment
+## 🚀 Automated Workflow
 
-### GitHub Pages Setup
+The repository uses GitHub Actions for automated builds:
 
-1. **Enable GitHub Pages:**
-   - Go to repository Settings → Pages
-   - Source: Deploy from a branch
-   - Branch: `main` / (root)
-   - Save
-
-2. **Custom Domain Configuration:**
-   - Add `CNAME` file with `pages.hexpy.games`
-   - Configure DNS to point to GitHub Pages
-   - Update GitHub Pages settings with custom domain
-
-3. **Verify Deployment:**
-   - Wait 1-2 minutes for GitHub Actions to complete
-   - Visit: https://pages.hexpy.games/
+1. **Edit markdown files** in `/nanachanai/terms/`
+2. **Commit and push** to main branch
+3. **GitHub Actions automatically:**
+   - Detects changes to `.md` files
+   - Runs the converter script
+   - Generates HTML files
+   - Deploys to `gh-pages` branch
+4. **GitHub Pages publishes** the updated site
 
 ## 🔄 Updating Documents
 
-### Method 1: Automated Conversion
+### Method 1: Direct Edit (Recommended)
 
-1. Update markdown source files in `/Users/yeonwoo/dev/NanaChanAI/docs/`
-2. Run the converter:
-   ```bash
-   cd /path/to/nanachan-ai-terms
-   node convert.js
-   ```
-3. Commit and push changes
+1. Edit markdown files in `/nanachanai/terms/`
+2. Commit changes to main branch
+3. GitHub Actions will automatically build and deploy
 
-### Method 2: Manual Update
+### Method 2: Sync from Main App
 
-Directly edit the HTML files and commit changes.
+If updating from `/Users/yeonwoo/dev/NanaChanAI/docs/`:
+
+```bash
+# Copy updated markdown files
+cp /Users/yeonwoo/dev/NanaChanAI/docs/PRIVACY_POLICY_EN.md nanachanai/terms/privacy-policy-en.md
+cp /Users/yeonwoo/dev/NanaChanAI/docs/PRIVACY_POLICY_KO.md nanachanai/terms/privacy-policy-ko.md
+cp /Users/yeonwoo/dev/NanaChanAI/docs/TERMS_OF_USE_EN.md nanachanai/terms/terms-of-use-en.md
+cp /Users/yeonwoo/dev/NanaChanAI/docs/TERMS_OF_USE_KO.md nanachanai/terms/terms-of-use-ko.md
+
+# Commit and push
+git add nanachanai/terms/
+git commit -m "Update legal documents"
+git push origin main
+```
+
+## 🛠️ Local Development
+
+### Build HTML Locally
+
+```bash
+# Build to default output (./dist)
+cd build
+node convert.js
+
+# Build to custom output
+node convert.js /path/to/output
+```
+
+### Test Locally
+
+```bash
+# Using Python
+cd dist
+python3 -m http.server 8000
+
+# Using Node.js
+npx http-server dist -p 8000
+
+# Visit: http://localhost:8000/nanachanai/terms/
+```
 
 ## 🎨 Design Philosophy
 
@@ -73,14 +125,24 @@ The site uses a minimal, "dry" design approach:
 - Clean, professional legal document styling
 - No fancy headers, footers, or navigation
 - Focus on readability and accessibility
-- Simple, semantic HTML
+- Simple, semantic HTML with minimal CSS
 - Mobile-responsive layout
+- Print-friendly formatting
 
-## 📝 Document Metadata
+## 📝 Converter Features
+
+The markdown-to-HTML converter (`build/convert.js`) supports:
+- **Block elements:** Headers, paragraphs, lists, tables, horizontal rules
+- **Inline elements:** Bold text, links
+- **Tables:** Full markdown table support with proper HTML generation
+- **Multiple languages:** English and Korean
+- **Flexible output:** Configurable output directory
+
+## 📜 Document Metadata
 
 **Effective Date:** October 11, 2025
-**Last Updated:** October 11, 2025
-**Version:** 1.0
+**Last Updated:** October 14, 2025
+**Version:** 2.0
 
 ## 📧 Contact
 
@@ -93,39 +155,11 @@ The site uses a minimal, "dry" design approach:
 - All pages served over HTTPS
 - No tracking scripts or cookies
 - Content hosted securely on GitHub Pages
-- Regular security updates via GitHub
-
-## 📜 License
-
-© 2025 HexpyGames. All rights reserved.
-
-Legal documents are proprietary and protected by copyright law.
-
-## 🛠️ Development
-
-### Local Testing
-
-```bash
-# Using Python
-python3 -m http.server 8000
-
-# Using Node.js
-npx http-server -p 8000
-
-# Then visit: http://localhost:8000
-```
-
-### File Generation
-
-The `convert.js` script automatically converts markdown files to HTML with:
-- Proper semantic HTML5 structure
-- Minimal styling for readability
-- Meta tags for SEO
-- Accessibility features
+- Automated builds run in isolated GitHub Actions environment
 
 ## 📱 Integration with NanaChan AI App
 
-These URLs will be integrated into the NanaChan AI mobile app at:
+These URLs are integrated into the NanaChan AI mobile app at:
 
 **File:** `src/modals/AboutModal.tsx`
 
@@ -133,15 +167,15 @@ Update URLs to:
 ```typescript
 const handlePrivacyPolicy = async () => {
   const url = currentLanguage === 'ko'
-    ? 'https://pages.hexpy.games/privacy-policy-ko'
-    : 'https://pages.hexpy.games/privacy-policy';
+    ? 'https://pages.hexpy.games/nanachanai/terms/privacy-policy-ko'
+    : 'https://pages.hexpy.games/nanachanai/terms/privacy-policy-en';
   await InAppBrowser.open(url, { /* config */ });
 };
 
 const handleTermsOfService = async () => {
   const url = currentLanguage === 'ko'
-    ? 'https://pages.hexpy.games/terms-of-use-ko'
-    : 'https://pages.hexpy.games/terms-of-use';
+    ? 'https://pages.hexpy.games/nanachanai/terms/terms-of-use-ko'
+    : 'https://pages.hexpy.games/nanachanai/terms/terms-of-use-en';
   await InAppBrowser.open(url, { /* config */ });
 };
 ```
@@ -151,7 +185,35 @@ const handleTermsOfService = async () => {
 - **Main App:** [NanaChanAI](https://github.com/Hexpy-Games/NanaChanAI) (Private)
 - **Legal Docs:** [nanachan-ai-terms](https://github.com/Hexpy-Games/nanachan-ai-terms) (This repo)
 
+## 📚 Technical Details
+
+### GitHub Actions Workflow
+
+The workflow (`.github/workflows/build-and-deploy.yml`) triggers on:
+- Push to main branch
+- Changes to files in `nanachanai/terms/**/*.md`
+- Changes to `build/**` directory
+- Changes to the workflow file itself
+
+The workflow:
+1. Checks out the repository
+2. Sets up Node.js environment
+3. Runs the converter script
+4. Prepares deployment directory with HTML files and assets
+5. Deploys to `gh-pages` branch using `peaceiris/actions-gh-pages@v3`
+
+### CSS Path Handling
+
+The converter generates HTML with CSS path: `../../../assets/css/style.css`
+
+This works because:
+- HTML files are at: `/nanachanai/terms/*.html`
+- CSS file is at: `/assets/css/style.css`
+- Relative path: `../../../` goes up 3 levels (terms → nanachanai → root)
+
 ---
 
 **Maintained by:** HexpyGames Development Team
 **Repository:** https://github.com/Hexpy-Games/nanachan-ai-terms
+
+© 2025 HexpyGames. All rights reserved.

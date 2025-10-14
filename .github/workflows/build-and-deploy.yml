@@ -1,0 +1,69 @@
+name: Build and Deploy Legal Documents
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'nanachanai/terms/**/*.md'
+      - 'build/**'
+      - '.github/workflows/build-and-deploy.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build HTML files
+        run: |
+          cd build
+          node convert.js ../dist
+          echo "✓ HTML files generated"
+
+      - name: Prepare deployment directory
+        run: |
+          # Create gh-pages branch structure
+          mkdir -p gh-pages/nanachanai/terms
+          mkdir -p gh-pages/assets/css
+
+          # Copy generated HTML files
+          cp -r dist/nanachanai/terms/* gh-pages/nanachanai/terms/
+
+          # Copy assets
+          cp -r build/assets/* gh-pages/assets/
+
+          # Copy CNAME and .nojekyll
+          cp CNAME gh-pages/
+          cp .nojekyll gh-pages/
+
+          echo "✓ Deployment directory prepared"
+
+      - name: List generated files
+        run: |
+          echo "Files to be deployed:"
+          ls -R gh-pages/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages
+          publish_branch: gh-pages
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy legal documents from ${{ github.sha }}'
+          force_orphan: false
+          keep_files: false

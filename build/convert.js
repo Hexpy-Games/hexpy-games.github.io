@@ -3,6 +3,10 @@
 /**
  * Markdown to HTML Converter for Legal Documents
  * Converts NanaChan AI legal documents from Markdown to simple HTML
+ *
+ * Usage:
+ *   node convert.js                    # Build to default output (../dist)
+ *   node convert.js /path/to/output    # Build to custom output directory
  */
 
 const fs = require('fs');
@@ -11,31 +15,35 @@ const path = require('path');
 // Base domain
 const BASE_DOMAIN = 'https://pages.hexpy.games';
 
+// Get output directory from command line or use default
+const outputDir = process.argv[2] || path.join(__dirname, '../dist');
+const sourceDir = path.join(__dirname, '../nanachanai/terms');
+
 // Configuration for each document
 const DOCUMENTS = [
   {
-    source: '/Users/yeonwoo/dev/NanaChanAI/docs/PRIVACY_POLICY_EN.md',
-    output: 'privacy-policy.html',
+    source: path.join(sourceDir, 'privacy-policy-en.md'),
+    output: 'privacy-policy-en.html',
     title: 'Privacy Policy - NanaChan AI',
     lang: 'en',
     description: 'Privacy Policy for NanaChan AI',
   },
   {
-    source: '/Users/yeonwoo/dev/NanaChanAI/docs/PRIVACY_POLICY_KO.md',
+    source: path.join(sourceDir, 'privacy-policy-ko.md'),
     output: 'privacy-policy-ko.html',
     title: '개인정보 처리방침 - NanaChan AI',
     lang: 'ko',
     description: 'NanaChan AI 개인정보 처리방침',
   },
   {
-    source: '/Users/yeonwoo/dev/NanaChanAI/docs/TERMS_OF_USE_EN.md',
-    output: 'terms-of-use.html',
+    source: path.join(sourceDir, 'terms-of-use-en.md'),
+    output: 'terms-of-use-en.html',
     title: 'Terms of Use - NanaChan AI',
     lang: 'en',
     description: 'Terms of Use for NanaChan AI',
   },
   {
-    source: '/Users/yeonwoo/dev/NanaChanAI/docs/TERMS_OF_USE_KO.md',
+    source: path.join(sourceDir, 'terms-of-use-ko.md'),
     output: 'terms-of-use-ko.html',
     title: '이용약관 - NanaChan AI',
     lang: 'ko',
@@ -225,7 +233,7 @@ function createHtmlDocument(config, content) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="${config.description}">
     <title>${config.title}</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../../../assets/css/style.css">
 </head>
 <body>
 ${content}
@@ -236,7 +244,7 @@ ${content}
 /**
  * Process a single document
  */
-function processDocument(config) {
+function processDocument(config, outputPath) {
   console.log(`Processing ${config.source}...`);
 
   try {
@@ -250,9 +258,9 @@ function processDocument(config) {
     const fullHtml = createHtmlDocument(config, htmlContent);
 
     // Write output file
-    fs.writeFileSync(config.output, fullHtml, 'utf8');
+    fs.writeFileSync(outputPath, fullHtml, 'utf8');
 
-    console.log(`✓ Created ${config.output}`);
+    console.log(`✓ Created ${outputPath}`);
   } catch (error) {
     console.error(`✗ Error processing ${config.source}:`, error.message);
     process.exit(1);
@@ -265,11 +273,25 @@ function processDocument(config) {
 function main() {
   console.log('NanaChan AI Legal Documents Converter');
   console.log('=====================================\n');
+  console.log(`Source: ${sourceDir}`);
+  console.log(`Output: ${outputDir}\n`);
 
-  DOCUMENTS.forEach(processDocument);
+  // Create output directory structure
+  const termsOutputDir = path.join(outputDir, 'nanachanai/terms');
+  if (!fs.existsSync(termsOutputDir)) {
+    fs.mkdirSync(termsOutputDir, { recursive: true });
+    console.log(`Created output directory: ${termsOutputDir}\n`);
+  }
+
+  // Process each document
+  DOCUMENTS.forEach(config => {
+    const outputPath = path.join(termsOutputDir, config.output);
+    processDocument(config, outputPath);
+  });
 
   console.log(`\n✓ All documents converted successfully!`);
   console.log(`\nBase domain: ${BASE_DOMAIN}`);
+  console.log(`URLs will be: ${BASE_DOMAIN}/nanachanai/terms/<filename>`);
 }
 
 // Run if called directly
