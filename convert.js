@@ -2,11 +2,14 @@
 
 /**
  * Markdown to HTML Converter for Legal Documents
- * Converts NanaChan AI legal documents from Markdown to HTML
+ * Converts NanaChan AI legal documents from Markdown to simple HTML
  */
 
 const fs = require('fs');
 const path = require('path');
+
+// Base domain
+const BASE_DOMAIN = 'https://pages.hexpy.games';
 
 // Configuration for each document
 const DOCUMENTS = [
@@ -15,40 +18,28 @@ const DOCUMENTS = [
     output: 'privacy-policy.html',
     title: 'Privacy Policy - NanaChan AI',
     lang: 'en',
-    langName: 'English',
-    altLang: 'privacy-policy-ko.html',
-    altLangName: '한국어',
-    description: 'Privacy Policy for NanaChan AI - Learn how we collect, use, and protect your personal information.',
+    description: 'Privacy Policy for NanaChan AI',
   },
   {
     source: '/Users/yeonwoo/dev/NanaChanAI/docs/PRIVACY_POLICY_KO.md',
     output: 'privacy-policy-ko.html',
     title: '개인정보 처리방침 - NanaChan AI',
     lang: 'ko',
-    langName: '한국어',
-    altLang: 'privacy-policy.html',
-    altLangName: 'English',
-    description: 'NanaChan AI 개인정보 처리방침 - 개인정보 수집, 이용 및 보호에 관한 안내',
+    description: 'NanaChan AI 개인정보 처리방침',
   },
   {
     source: '/Users/yeonwoo/dev/NanaChanAI/docs/TERMS_OF_USE_EN.md',
     output: 'terms-of-use.html',
     title: 'Terms of Use - NanaChan AI',
     lang: 'en',
-    langName: 'English',
-    altLang: 'terms-of-use-ko.html',
-    altLangName: '한국어',
-    description: 'Terms of Use for NanaChan AI - Legal terms and conditions for using our service.',
+    description: 'Terms of Use for NanaChan AI',
   },
   {
     source: '/Users/yeonwoo/dev/NanaChanAI/docs/TERMS_OF_USE_KO.md',
     output: 'terms-of-use-ko.html',
     title: '이용약관 - NanaChan AI',
     lang: 'ko',
-    langName: '한국어',
-    altLang: 'terms-of-use.html',
-    altLangName: 'English',
-    description: 'NanaChan AI 이용약관 - 서비스 이용에 관한 법적 조건',
+    description: 'NanaChan AI 이용약관',
   },
 ];
 
@@ -59,8 +50,8 @@ function markdownToHtml(markdown) {
   let html = markdown;
 
   // Convert headers
-  html = html.replace(/^### (.+)$/gm, '<h3 id="$1">$1</h3>');
-  html = html.replace(/^## (.+)$/gm, '<h2 id="$1">$1</h2>');
+  html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+  html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
   html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
 
   // Convert bold
@@ -111,8 +102,10 @@ function markdownToHtml(markdown) {
       // Paragraphs
       if (trimmed && !trimmed.startsWith('<')) {
         processedLines.push(`<p>${line}</p>`);
-      } else {
+      } else if (trimmed) {
         processedLines.push(line);
+      } else {
+        processedLines.push('');
       }
     }
   }
@@ -129,62 +122,26 @@ function markdownToHtml(markdown) {
   // Clean up empty paragraphs
   html = html.replace(/<p>\s*<\/p>/g, '');
   html = html.replace(/<p>\s*<h/g, '<h');
-  html = html.replace(/<\/h[1-6]>\s*<\/p>/g, '</h1>');
+  html = html.replace(/<\/h[1-6]>\s*<\/p>/g, (match) => match.replace(/<\/?p>/g, ''));
 
   return html;
 }
 
 /**
- * Create HTML document structure
+ * Create simple HTML document
  */
 function createHtmlDocument(config, content) {
-  const otherDocsNav = config.output.includes('privacy')
-    ? `<a href="${config.output.replace('privacy-policy', 'terms-of-use')}" class="nav-link">Terms of Use</a>`
-    : `<a href="${config.output.replace('terms-of-use', 'privacy-policy')}" class="nav-link">Privacy Policy</a>`;
-
   return `<!DOCTYPE html>
 <html lang="${config.lang}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="${config.description}">
-    <meta name="author" content="HexpyGames">
     <title>${config.title}</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
-    <header>
-        <div class="header-content">
-            <a href="index.html" class="logo">
-                <span class="logo-text">🌸 NanaChan AI</span>
-            </a>
-            <nav class="nav-links">
-                <a href="${config.output}" class="nav-link">${config.langName}</a>
-                <a href="${config.altLang}" class="nav-link">${config.altLangName}</a>
-                ${otherDocsNav}
-            </nav>
-        </div>
-    </header>
-
-    <main id="main-content">
-        <div class="container">
 ${content}
-        </div>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="index.html">Home</a>
-                <a href="privacy-policy.html">Privacy Policy</a>
-                <a href="terms-of-use.html">Terms of Use</a>
-                <a href="mailto:yeonwoo.jo@hexpy.games">Contact</a>
-            </div>
-            <p class="copyright">© 2025 HexpyGames. All rights reserved.</p>
-        </div>
-    </footer>
 </body>
 </html>`;
 }
@@ -224,7 +181,8 @@ function main() {
 
   DOCUMENTS.forEach(processDocument);
 
-  console.log('\n✓ All documents converted successfully!');
+  console.log(`\n✓ All documents converted successfully!`);
+  console.log(`\nBase domain: ${BASE_DOMAIN}`);
 }
 
 // Run if called directly

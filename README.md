@@ -4,30 +4,29 @@ This repository hosts the legal documents for NanaChan AI, including Privacy Pol
 
 ## 🌐 Live Site
 
-**Production URL:** https://hexpy-games.github.io/nanachan-ai-terms/
+**Production URL:** https://pages.hexpy.games/
 
 ## 📄 Available Documents
 
 ### Privacy Policy
-- **English:** `/privacy-policy.html` → https://hexpy-games.github.io/nanachan-ai-terms/privacy-policy
-- **Korean:** `/privacy-policy-ko.html` → https://hexpy-games.github.io/nanachan-ai-terms/privacy-policy-ko
+- **English:** `/privacy-policy.html` → https://pages.hexpy.games/privacy-policy
+- **Korean:** `/privacy-policy-ko.html` → https://pages.hexpy.games/privacy-policy-ko
 
 ### Terms of Use
-- **English:** `/terms-of-use.html` → https://hexpy-games.github.io/nanachan-ai-terms/terms-of-use
-- **Korean:** `/terms-of-use-ko.html` → https://hexpy-games.github.io/nanachan-ai-terms/terms-of-use-ko
+- **English:** `/terms-of-use.html` → https://pages.hexpy.games/terms-of-use
+- **Korean:** `/terms-of-use-ko.html` → https://pages.hexpy.games/terms-of-use-ko
 
 ## 🏗️ Repository Structure
 
 ```
 nanachan-ai-terms/
-├── index.html                    # Landing page
 ├── privacy-policy.html           # Privacy Policy (English)
 ├── privacy-policy-ko.html        # Privacy Policy (Korean)
 ├── terms-of-use.html            # Terms of Use (English)
 ├── terms-of-use-ko.html         # Terms of Use (Korean)
 ├── assets/
 │   └── css/
-│       └── style.css            # Responsive stylesheet
+│       └── style.css            # Minimal stylesheet
 ├── convert.js                    # Markdown to HTML converter
 ├── .nojekyll                    # Disable Jekyll processing
 └── README.md                     # This file
@@ -43,20 +42,14 @@ nanachan-ai-terms/
    - Branch: `main` / (root)
    - Save
 
-2. **Verify Deployment:**
+2. **Custom Domain Configuration:**
+   - Add `CNAME` file with `pages.hexpy.games`
+   - Configure DNS to point to GitHub Pages
+   - Update GitHub Pages settings with custom domain
+
+3. **Verify Deployment:**
    - Wait 1-2 minutes for GitHub Actions to complete
-   - Visit: https://hexpy-games.github.io/nanachan-ai-terms/
-
-### Custom Domain (Optional)
-
-To use a custom domain like `legal.nanachan.ai`:
-
-1. Add `CNAME` file with your domain
-2. Configure DNS:
-   ```
-   CNAME legal.nanachan.ai hexpy-games.github.io
-   ```
-3. Update GitHub Pages settings with custom domain
+   - Visit: https://pages.hexpy.games/
 
 ## 🔄 Updating Documents
 
@@ -74,19 +67,14 @@ To use a custom domain like `legal.nanachan.ai`:
 
 Directly edit the HTML files and commit changes.
 
-## 🎨 Styling
+## 🎨 Design Philosophy
 
-The site uses a mobile-first responsive design with:
+The site uses a minimal, "dry" design approach:
 - Clean, professional legal document styling
-- Dark mode support (auto-detected)
-- Print-friendly layout
-- Accessible navigation
-- Smooth scrolling and transitions
-
-### Color Scheme
-- Primary: `#FF69B4` (Hot Pink - NanaChan brand color)
-- Background: `#FFFFFF` (Light) / `#1a1a1a` (Dark)
-- Text: `#333333` (Light) / `#E0E0E0` (Dark)
+- No fancy headers, footers, or navigation
+- Focus on readability and accessibility
+- Simple, semantic HTML
+- Mobile-responsive layout
 
 ## 📝 Document Metadata
 
@@ -131,29 +119,29 @@ npx http-server -p 8000
 
 The `convert.js` script automatically converts markdown files to HTML with:
 - Proper semantic HTML5 structure
-- Responsive navigation
+- Minimal styling for readability
 - Meta tags for SEO
-- Consistent styling
 - Accessibility features
 
 ## 📱 Integration with NanaChan AI App
 
-These URLs are integrated into the NanaChan AI mobile app at:
+These URLs will be integrated into the NanaChan AI mobile app at:
 
 **File:** `src/modals/AboutModal.tsx`
 
+Update URLs to:
 ```typescript
 const handlePrivacyPolicy = async () => {
   const url = currentLanguage === 'ko'
-    ? 'https://hexpy-games.github.io/nanachan-ai-terms/privacy-policy-ko'
-    : 'https://hexpy-games.github.io/nanachan-ai-terms/privacy-policy';
+    ? 'https://pages.hexpy.games/privacy-policy-ko'
+    : 'https://pages.hexpy.games/privacy-policy';
   await InAppBrowser.open(url, { /* config */ });
 };
 
 const handleTermsOfService = async () => {
   const url = currentLanguage === 'ko'
-    ? 'https://hexpy-games.github.io/nanachan-ai-terms/terms-of-use-ko'
-    : 'https://hexpy-games.github.io/nanachan-ai-terms/terms-of-use';
+    ? 'https://pages.hexpy.games/terms-of-use-ko'
+    : 'https://pages.hexpy.games/terms-of-use';
   await InAppBrowser.open(url, { /* config */ });
 };
 ```

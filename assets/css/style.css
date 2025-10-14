@@ -1,53 +1,8 @@
 /*
- * NanaChan AI - Legal Documents Stylesheet
- * Mobile-first responsive design for Privacy Policy and Terms of Use
+ * NanaChan AI - Legal Documents
+ * Simple, minimal, professional design
  */
 
-:root {
-  /* Colors */
-  --primary-color: #FF69B4;
-  --bg-color: #FFFFFF;
-  --text-color: #333333;
-  --text-secondary: #666666;
-  --border-color: #E0E0E0;
-  --link-color: #FF69B4;
-  --link-hover: #FF1493;
-  --code-bg: #F5F5F5;
-  --header-bg: #FFFFFF;
-  --shadow: rgba(0, 0, 0, 0.1);
-
-  /* Typography */
-  --font-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
-  --font-size-base: 16px;
-  --line-height: 1.6;
-
-  /* Spacing */
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 1rem;
-  --spacing-md: 1.5rem;
-  --spacing-lg: 2rem;
-  --spacing-xl: 3rem;
-
-  /* Layout */
-  --max-width: 800px;
-  --border-radius: 8px;
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-color: #1a1a1a;
-    --text-color: #E0E0E0;
-    --text-secondary: #A0A0A0;
-    --border-color: #333333;
-    --code-bg: #2a2a2a;
-    --header-bg: #1a1a1a;
-    --shadow: rgba(255, 255, 255, 0.1);
-  }
-}
-
-/* Reset and base styles */
 * {
   margin: 0;
   padding: 0;
@@ -56,311 +11,98 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: var(--font-size-base);
 }
 
 body {
-  font-family: var(--font-base);
-  line-height: var(--line-height);
-  color: var(--text-color);
-  background-color: var(--bg-color);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Layout */
-.container {
-  max-width: var(--max-width);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  font-size: 16px;
+  padding: 20px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: var(--spacing-md);
-}
-
-@media (min-width: 768px) {
-  .container {
-    padding: var(--spacing-lg);
-  }
-}
-
-/* Header */
-header {
-  background-color: var(--header-bg);
-  border-bottom: 1px solid var(--border-color);
-  padding: var(--spacing-md) 0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 4px var(--shadow);
-}
-
-.header-content {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--spacing-sm);
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  text-decoration: none;
-  color: var(--text-color);
-}
-
-.logo-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-}
-
-.logo-text {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.nav-links {
-  display: flex;
-  gap: var(--spacing-md);
-  flex-wrap: wrap;
-}
-
-.nav-link {
-  color: var(--link-color);
-  text-decoration: none;
-  font-size: 0.875rem;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--border-radius);
-  transition: background-color 0.2s;
-}
-
-.nav-link:hover {
-  background-color: var(--code-bg);
-  color: var(--link-hover);
-}
-
-/* Main content */
-main {
-  padding: var(--spacing-lg) 0;
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
-  line-height: 1.3;
-  margin-top: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
-  color: var(--text-color);
-}
-
 h1 {
   font-size: 2rem;
-  margin-top: 0;
-  padding-bottom: var(--spacing-md);
-  border-bottom: 2px solid var(--primary-color);
+  font-weight: 600;
+  margin: 2rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #333;
 }
 
 h2 {
   font-size: 1.5rem;
-  padding-top: var(--spacing-md);
+  font-weight: 600;
+  margin: 2rem 0 1rem 0;
 }
 
 h3 {
   font-size: 1.25rem;
-}
-
-h4 {
-  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem 0;
 }
 
 p {
-  margin-bottom: var(--spacing-md);
-  color: var(--text-color);
+  margin-bottom: 1rem;
 }
 
 /* Links */
 a {
-  color: var(--link-color);
+  color: #0066cc;
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--link-hover);
   text-decoration: underline;
 }
 
 /* Lists */
 ul, ol {
-  margin-left: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
+  margin: 0 0 1rem 2rem;
 }
 
 li {
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: 0.5rem;
 }
 
-/* Code and pre */
-code {
-  background-color: var(--code-bg);
-  padding: 0.2em 0.4em;
-  border-radius: 3px;
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-}
-
-pre {
-  background-color: var(--code-bg);
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius);
-  overflow-x: auto;
-  margin-bottom: var(--spacing-md);
-}
-
-pre code {
-  background-color: transparent;
-  padding: 0;
-}
-
-/* Metadata */
-.metadata {
-  background-color: var(--code-bg);
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius);
-  margin-bottom: var(--spacing-lg);
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-}
-
-.metadata strong {
-  color: var(--text-color);
-}
-
-/* Important notices */
-.notice {
-  background-color: #FFF9E6;
-  border-left: 4px solid #FFB74D;
-  padding: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
-  border-radius: var(--border-radius);
-}
-
-@media (prefers-color-scheme: dark) {
-  .notice {
-    background-color: #2a2410;
-    border-left-color: #FFB74D;
-  }
-}
-
-.notice-title {
+/* Strong */
+strong {
   font-weight: 600;
-  margin-bottom: var(--spacing-xs);
 }
 
-/* Table of contents */
-.toc {
-  background-color: var(--code-bg);
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius);
-  margin-bottom: var(--spacing-lg);
+/* Horizontal rule */
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 2rem 0;
 }
 
-.toc-title {
-  font-size: 1.1rem;
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+th {
+  background-color: #f5f5f5;
   font-weight: 600;
-  margin-bottom: var(--spacing-sm);
 }
 
-.toc ul {
-  list-style: none;
-  margin-left: 0;
-}
-
-.toc li {
-  margin-bottom: var(--spacing-xs);
-}
-
-.toc a {
-  color: var(--text-color);
-}
-
-.toc a:hover {
-  color: var(--link-hover);
-}
-
-/* Footer */
-footer {
-  border-top: 1px solid var(--border-color);
-  padding: var(--spacing-lg) 0;
-  margin-top: var(--spacing-xl);
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-}
-
-.footer-content {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
-}
-
-.footer-links {
-  display: flex;
-  justify-content: center;
-  gap: var(--spacing-md);
-  flex-wrap: wrap;
-  margin-bottom: var(--spacing-sm);
-}
-
-.copyright {
-  margin-top: var(--spacing-sm);
-}
-
-/* Print styles */
-@media print {
-  header {
-    position: static;
-    box-shadow: none;
-  }
-
-  .nav-links,
-  footer {
-    display: none;
-  }
-
-  body {
-    font-size: 12pt;
-  }
-
-  h1 {
-    font-size: 18pt;
-  }
-
-  h2 {
-    font-size: 16pt;
-    page-break-after: avoid;
-  }
-
-  h3 {
-    font-size: 14pt;
-  }
-
-  a {
-    text-decoration: underline;
-    color: #000;
-  }
-
-  a[href]:after {
-    content: " (" attr(href) ")";
-  }
-}
-
-/* Responsive adjustments */
+/* Mobile adjustments */
 @media (max-width: 640px) {
-  :root {
-    --font-size-base: 15px;
+  body {
+    padding: 15px;
+    font-size: 15px;
   }
 
   h1 {
@@ -371,43 +113,24 @@ footer {
     font-size: 1.35rem;
   }
 
-  .header-content {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .nav-links {
-    width: 100%;
+  h3 {
+    font-size: 1.1rem;
   }
 }
 
-/* Accessibility */
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: var(--primary-color);
-  color: white;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  z-index: 200;
-}
+/* Print styles */
+@media print {
+  body {
+    font-size: 12pt;
+    max-width: none;
+  }
 
-.skip-link:focus {
-  top: 0;
-}
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
 
-/* Smooth transitions */
-* {
-  transition: background-color 0.3s ease;
-}
-
-/* Selection color */
-::selection {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-::-moz-selection {
-  background-color: var(--primary-color);
-  color: white;
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
 }
