@@ -54,13 +54,16 @@ const DOCUMENTS = [
 /**
  * Generate heading ID from text
  * Converts "1. Purpose of Processing" to "1-purpose-of-processing"
+ * Converts "1. 개인정보의 처리 목적" to "1-개인정보의-처리-목적"
  */
 function generateHeadingId(text) {
   return text
     .toLowerCase()
-    .replace(/[^\w\s-]/g, '') // Remove special characters except spaces and hyphens
-    .replace(/\s+/g, '-')      // Replace spaces with hyphens
-    .replace(/-+/g, '-')       // Replace multiple hyphens with single hyphen
+    // Keep: letters, numbers, spaces, hyphens, Korean Hangul, and basic Unicode word chars
+    .replace(/[^\w\s\-\uAC00-\uD7AF\u1100-\u11FF\u3130-\u318F]/gu, '')
+    .replace(/\s+/g, '-')        // Replace spaces with hyphens
+    .replace(/-+/g, '-')         // Replace multiple hyphens with single hyphen
+    .replace(/^-+|-+$/g, '')     // Remove leading and trailing hyphens
     .trim();
 }
 
