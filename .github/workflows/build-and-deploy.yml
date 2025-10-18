@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'nanachanai/terms/**/*.md'
+      - 'nanachanai/support/**'
       - 'build/**'
       - '.github/workflows/build-and-deploy.yml'
 
@@ -37,10 +38,14 @@ jobs:
         run: |
           # Create gh-pages branch structure
           mkdir -p gh-pages/nanachanai/terms
+          mkdir -p gh-pages/nanachanai/support
           mkdir -p gh-pages/assets/css
 
           # Copy generated HTML files
           cp -r dist/nanachanai/terms/* gh-pages/nanachanai/terms/
+
+          # Copy support pages
+          cp -r nanachanai/support/* gh-pages/nanachanai/support/
 
           # Copy assets
           cp -r build/assets/* gh-pages/assets/
