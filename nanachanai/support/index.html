@@ -13,179 +13,121 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
+            line-height: 1.8;
             color: #1C1C1E;
-            background: #F2F1EF;
+            background: #FFFFFF;
             min-height: 100vh;
-            padding: 20px;
+            padding: 60px 20px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 680px;
             margin: 0 auto;
-            background: #FFFFFF;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(28, 28, 30, 0.12);
-            overflow: hidden;
         }
 
         header {
-            background: #1C1C1E;
-            color: #FFFFFF;
-            padding: 40px 30px;
-            text-align: center;
+            margin-bottom: 80px;
         }
 
         h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            font-weight: 700;
+            font-size: 2em;
+            margin-bottom: 12px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
         }
 
         .subtitle {
-            font-size: 1.1em;
-            opacity: 0.85;
-            color: #F2F1EF;
-        }
-
-        .content {
-            padding: 40px 30px;
+            font-size: 1em;
+            color: #8E8E93;
+            font-weight: 400;
         }
 
         .section {
-            margin-bottom: 40px;
+            margin-bottom: 64px;
         }
 
         h2 {
             color: #1C1C1E;
-            font-size: 1.8em;
-            margin-bottom: 15px;
+            font-size: 1.25em;
+            margin-bottom: 24px;
             font-weight: 600;
+            letter-spacing: -0.01em;
         }
 
         h3 {
             color: #1C1C1E;
-            font-size: 1.3em;
-            margin: 25px 0 10px 0;
+            font-size: 1em;
+            margin: 32px 0 12px 0;
             font-weight: 600;
         }
 
-        p, li {
-            margin-bottom: 10px;
+        p {
+            margin-bottom: 16px;
+            color: #1C1C1E;
+            font-size: 1em;
+        }
+
+        ul, ol {
+            margin: 16px 0 16px 24px;
             color: #1C1C1E;
         }
 
-        ul {
-            margin-left: 20px;
+        li {
+            margin-bottom: 8px;
         }
 
-        .contact-box {
-            background: #6B7F5A;
-            color: #FFFFFF;
-            padding: 25px;
-            border-radius: 12px;
-            margin: 20px 0;
-        }
-
-        .contact-box h3 {
-            color: #FFFFFF;
-            margin-top: 0;
-        }
-
-        .contact-box p {
-            color: #FFFFFF;
-            margin: 8px 0;
-        }
-
-        .contact-box a {
-            color: #FFFFFF;
-            text-decoration: underline;
+        strong {
             font-weight: 600;
+        }
+
+        a {
+            color: #1C1C1E;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: #6B7F5A;
+        }
+
+        .contact {
+            margin: 24px 0;
         }
 
         .faq-item {
+            margin-bottom: 40px;
+        }
+
+        .divider {
+            height: 1px;
             background: #F2F1EF;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border-left: 4px solid #6B7F5A;
-        }
-
-        .faq-item h3 {
-            margin-top: 0;
-            color: #1C1C1E;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .feature-card {
-            background: #F2F1EF;
-            padding: 20px;
-            border-radius: 12px;
-            border-top: 3px solid #6B7F5A;
-        }
-
-        .feature-card h3 {
-            margin-top: 0;
-            font-size: 1.1em;
-        }
-
-        .links {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-
-        .links a {
-            color: #1C1C1E;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 10px 20px;
-            border: 2px solid #1C1C1E;
-            border-radius: 6px;
-            transition: all 0.3s;
-        }
-
-        .links a:hover {
-            background: #1C1C1E;
-            color: #FFFFFF;
+            margin: 48px 0;
         }
 
         footer {
-            background: #F2F1EF;
-            padding: 20px 30px;
-            text-align: center;
+            margin-top: 80px;
+            padding-top: 32px;
+            border-top: 1px solid #F2F1EF;
             color: #8E8E93;
-            font-size: 0.9em;
-        }
-
-        .badge {
-            display: inline-block;
-            background: #6B7F5A;
-            color: #FFFFFF;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            margin-top: 10px;
+            font-size: 0.875em;
         }
 
         @media (max-width: 600px) {
+            body {
+                padding: 40px 20px;
+            }
+
             h1 {
-                font-size: 2em;
+                font-size: 1.75em;
             }
 
-            .content {
-                padding: 30px 20px;
+            header {
+                margin-bottom: 60px;
             }
 
-            .feature-grid {
-                grid-template-columns: 1fr;
+            .section {
+                margin-bottom: 48px;
             }
         }
     </style>
@@ -193,119 +135,70 @@
 <body>
     <div class="container">
         <header>
-            <h1>🎨 NanaChan AI Support</h1>
-            <p class="subtitle">Transform your photos into stunning anime figure collectibles</p>
+            <h1>NanaChan AI Support</h1>
+            <p class="subtitle">Transform your photos into anime figure collectibles</p>
         </header>
 
-        <div class="content">
-            <div class="section">
-                <h2>📧 Contact Us</h2>
-                <div class="contact-box">
-                    <h3>Need Help?</h3>
-                    <p><strong>Email:</strong> <a href="mailto:support@hexpy.games">support@hexpy.games</a></p>
-                    <p><strong>Response Time:</strong> Within 24-48 hours</p>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>❓ Frequently Asked Questions</h2>
-
-                <div class="faq-item">
-                    <h3>How do I generate a figure photo?</h3>
-                    <ol>
-                        <li>Tap "Generate" on the home screen</li>
-                        <li>Select a photo from your library</li>
-                        <li>Choose a preset or customize options</li>
-                        <li>Tap the "Generate" button</li>
-                    </ol>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How do credits work?</h3>
-                    <ul>
-                        <li>Each generation costs <strong>10 credits</strong></li>
-                        <li>Custom backgrounds: <strong>+5 credits</strong></li>
-                        <li>Custom angles: <strong>+5 credits</strong></li>
-                    </ul>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What if my generation fails?</h3>
-                    <p>If generation fails, your credits will be automatically refunded. Try:</p>
-                    <ul>
-                        <li>Using a clear, well-lit photo</li>
-                        <li>Ensuring stable internet connection</li>
-                        <li>Restarting the app if issues persist</li>
-                    </ul>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How do I purchase credits?</h3>
-                    <ol>
-                        <li>Tap your credit balance in the top right</li>
-                        <li>Choose a credit package that fits your needs</li>
-                        <li>Complete purchase via Apple Pay or credit card</li>
-                    </ol>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Have other questions?</h3>
-                    <p>For any inquiries, please contact our support team at <a href="mailto:support@hexpy.games">support@hexpy.games</a></p>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>💡 Tips for Best Results</h2>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <h3>📸 Photo Quality</h3>
-                        <ul>
-                            <li>Use clear, well-lit photos</li>
-                            <li>Higher resolution = better results</li>
-                            <li>Avoid blurry or dark images</li>
-                        </ul>
-                    </div>
-                    <div class="feature-card">
-                        <h3>🎯 Composition</h3>
-                        <ul>
-                            <li>Center your subject in frame</li>
-                            <li>Use portrait-oriented photos</li>
-                            <li>Single subject works best</li>
-                        </ul>
-                    </div>
-                    <div class="feature-card">
-                        <h3>🎨 Presets</h3>
-                        <ul>
-                            <li>Studio Light: Clean white background</li>
-                            <li>Cozy Desk: Warm everyday setup</li>
-                            <li>Gaming Setup: RGB lighting</li>
-                            <li>Dark Showcase: Elegant display</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>🔒 Privacy & Permissions</h2>
-                <p><strong>Photo Library Access:</strong> The app needs access to your photo library to save generated figure photos and let you select photos for transformation. We never store or share your photos without permission.</p>
-
-                <div class="links">
-                    <a href="../terms/privacy_en.html">Privacy Policy</a>
-                    <a href="../terms/terms_en.html">Terms of Service</a>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>📱 Technical Information</h2>
-                <p><strong>Current Version:</strong> 1.0 (Build 1)</p>
-                <p><strong>Requirements:</strong> iOS 13.0 or later</p>
-                <p><strong>Languages:</strong> English, Korean (한국어)</p>
-                <span class="badge">Available on the App Store</span>
+        <div class="section">
+            <h2>Contact</h2>
+            <div class="contact">
+                <p>For support inquiries, contact us at <a href="mailto:support@hexpy.games">support@hexpy.games</a></p>
+                <p>We typically respond within 24-48 hours.</p>
             </div>
         </div>
 
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <h3>How do I generate a figure photo?</h3>
+                <ol>
+                    <li>Tap "Generate" on the home screen</li>
+                    <li>Select a photo from your library</li>
+                    <li>Choose a preset or customize options</li>
+                    <li>Tap the "Generate" button</li>
+                </ol>
+            </div>
+
+            <div class="faq-item">
+                <h3>How do credits work?</h3>
+                <p>Each generation costs 10 credits. Custom backgrounds and custom angles each add 5 additional credits.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>What if my generation fails?</h3>
+                <p>If generation fails, your credits will be automatically refunded. For best results, use clear, well-lit photos and ensure a stable internet connection.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How do I purchase credits?</h3>
+                <p>Tap your credit balance in the top right, choose a credit package, and complete purchase via Apple Pay or credit card.</p>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>Tips for Best Results</h2>
+            <p>Use clear, well-lit photos with higher resolution. Center your subject in frame and use portrait-oriented photos when possible. Single subjects work best.</p>
+
+            <h3>Available Presets</h3>
+            <p>Studio Light provides a clean white background. Cozy Desk offers a warm everyday setup. Gaming Setup features RGB lighting. Dark Showcase delivers an elegant display.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <h2>Privacy</h2>
+            <p>The app requires photo library access to save generated figure photos and select photos for transformation. We never store or share your photos without permission.</p>
+            <p><a href="../terms/privacy_en.html">Privacy Policy</a> · <a href="../terms/terms_en.html">Terms of Service</a></p>
+        </div>
+
         <footer>
-            <p>&copy; 2025 Hexpy Games. All rights reserved.</p>
+            <p>NanaChan AI version 1.0 · iOS 13.0 or later · Available in English and Korean</p>
+            <p>&copy; 2025 Hexpy Games</p>
         </footer>
     </div>
 </body>
